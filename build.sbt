@@ -56,8 +56,19 @@ lazy val commonSettings = Seq(
 
     addDevCredentials ++ Seq("-Xmx2g")
   }
-) ++ baseSettings ++
+) ++ fortifySettings ++ baseSettings ++
   addCommandAlias("start", "reStart") ++ logging
+
+lazy val fortifySettings = Seq(
+  credentials += Credentials(
+  Path.userHome / ".lightbend" / "commercial.credentials"),
+  resolvers += Resolver.url(
+  "lightbend-commercial-releases",
+  new URL("http://repo.lightbend.com/commercial-releases/"))(
+  Resolver.ivyStylePatterns),
+  libraryDependencies += compilerPlugin(
+  "com.lightbend" %% "scala-fortify" % "aa07381f" classifier "assembly"),
+  scalacOptions += s"-P:fortify:build=scaladex")
 
 lazy val scaladex = project
   .in(file("."))
