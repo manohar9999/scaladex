@@ -67,8 +67,11 @@ lazy val fortifySettings = Seq(
   new URL("http://repo.lightbend.com/commercial-releases/"))(
   Resolver.ivyStylePatterns),
   libraryDependencies += compilerPlugin(
-  "com.lightbend" %% "scala-fortify" % "aa07381f" classifier "assembly"),
-  scalacOptions += s"-P:fortify:build=scaladex")
+  "com.lightbend" %% "scala-fortify" % "deb2b0d3" classifier "assembly" cross CrossVersion.patch),
+  scalacOptions += s"-P:fortify:build=scaladex",
+  scalacOptions += s"-P:fortify:scaversion=18.1"
+)
+
 
 lazy val scaladex = project
   .in(file("."))
